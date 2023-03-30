@@ -21,7 +21,7 @@ namespace cay_ocagi_denemeler.Controllers
         [HttpGet]
         public async Task <IActionResult> GetOrders()
         {
-           var orders = await context.Orders.ToListAsync();
+           var orders = await context.Orders.OrderBy(x => x.OrderDate).ToListAsync(); 
 
             return Ok(orders);
         }
@@ -29,6 +29,7 @@ namespace cay_ocagi_denemeler.Controllers
         [HttpPost]
         public async Task<IActionResult> PostOrder ([FromBody] Order order)
         {
+            order.OrderDate= DateTime.Now;
             await context.Orders.AddAsync(order);
             await context.SaveChangesAsync();
 
@@ -84,7 +85,7 @@ namespace cay_ocagi_denemeler.Controllers
         [Route("/GetOrderByDepartment")]
         public async Task<IActionResult> GetOrderByDepartment([FromQuery] string Department)
         {
-            var orders = await context.Orders.Where(x=>x.Location.Department==Department).ToListAsync();
+            var orders = await context.Orders.Where(x=>x.Location.Department==Department).OrderBy(x=> x.OrderDate).ToListAsync();
 
             return Ok(orders);
         }

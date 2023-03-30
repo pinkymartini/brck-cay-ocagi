@@ -14,5 +14,7 @@ namespace cay_ocagi_denemeler.Models
         public virtual ICollection<Product> Products {get; set; } = new List<Product>();
 
         public virtual User? OrderedBy { get; set; }
+
+        public DateTime OrderDate { get; set; }
     }
 }
