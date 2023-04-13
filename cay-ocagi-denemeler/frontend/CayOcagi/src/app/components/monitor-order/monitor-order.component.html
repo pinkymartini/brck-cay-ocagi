@@ -1,0 +1,82 @@
+<div style="background-color: #d1edff;">
+  <div style="display: flex; flex-direction: row-reverse;">
+  <mat-form-field>
+    <mat-label>Departman</mat-label>
+    <mat-select required name="department" [(ngModel)]="departmentSelection">
+      <mat-option value="ARGE">ARGE</mat-option>
+      <mat-option value="İNSAN KAYNAKLARI">İNSAN KAYNAKLARI</mat-option>
+      <mat-option value="GENEL MÜDÜRLÜK ALT KAT">GENEL MÜDÜRLÜK ALT KAT</mat-option>
+      <mat-option value="GENEL MÜDÜRLÜK ÜST KAT">GENEL MÜDÜRLÜK ÜST KAT</mat-option>
+      <mat-option value="BTA">BTA</mat-option>
+      <mat-option value="ALL">TÜM SİPARİŞLER</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+  
+
+  <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center;">
+    <h1 style="color: #181544;">{{departmentSelection}} SİPARİŞLERİ</h1>
+
+    <div *ngFor="let order of orderList">
+      <mat-card style=" width: 100vh; display: flex; flex-direction: column;  ">
+        <mat-card-header>
+          <mat-card-title style="color: #181544;">Sipariş Detayı</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+
+
+        <div style="display: flex; flex-direction: row; flex: 1;">
+          <div style="display: flex; flex-direction: column;  flex: 1;">
+            <div *ngFor="let product of order.products;">
+
+              <div *ngIf="product.quantity!=0 else elseBlock">
+                <mat-card-content>
+                  • {{product.quantity}} {{product.type| titlecaseTurkish }} {{product.name}}
+                </mat-card-content>
+
+              </div>
+
+
+              <ng-template #elseBlock>
+                <mat-card-content>
+                  • {{product.name}}
+                </mat-card-content>
+              </ng-template>
+
+
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; flex: 1;">
+            <mat-card-subtitle>
+              Sipariş Lokasyonu:
+            </mat-card-subtitle>
+            <mat-card-content> {{order.location?.department}} {{order.location?.meetingRoom}} </mat-card-content>
+
+
+
+            <mat-card-subtitle>Sipariş Sahibi:
+            </mat-card-subtitle>
+            <mat-card-content>{{order.orderedBy?.name}} {{order.orderedBy?.surname}}</mat-card-content>
+
+
+            <mat-card-subtitle>
+              Sipariş Saati:
+            </mat-card-subtitle>
+            <mat-card-content style="font-weight: bold;"> {{order.orderDate | date:'HH:mm'}}</mat-card-content>
+            
+          </div>
+          
+        </div>
+
+        <mat-divider></mat-divider>
+        <mat-card-footer style="display: flex; flex-direction: row-reverse;">
+          <button mat-button color="warn" (click)="deleteOrder(order.orderId)">Onayla ve Sil</button>
+        </mat-card-footer>
+      </mat-card>
+
+
+    </div>
+    <div id="target"></div>
+  </div>
+</div>

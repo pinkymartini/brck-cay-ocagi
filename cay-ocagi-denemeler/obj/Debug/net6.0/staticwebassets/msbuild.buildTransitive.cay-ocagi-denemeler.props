@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\cay-ocagi-denemeler.props" />
+</Project>
