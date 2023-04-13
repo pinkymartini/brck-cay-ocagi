@@ -18,6 +18,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatChipsModule} from '@angular/material/chips';
 
 import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -51,7 +52,8 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     MatDialogModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
     
    
   ],
