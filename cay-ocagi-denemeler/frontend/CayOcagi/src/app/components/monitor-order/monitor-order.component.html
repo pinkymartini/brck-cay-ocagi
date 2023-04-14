@@ -19,15 +19,30 @@
 
     <div *ngFor="let order of orderList">
       <mat-card style=" width: 100vh; display: flex; flex-direction: column;  ">
-        <mat-card-header>
-          <mat-card-title style="color: #181544;">Sipariş Detayı</mat-card-title>
-          <mat-card-subtitle> {{subtractMinutes(order.orderDate, this.date )}} dakika önce sipariş
-            verildi</mat-card-subtitle>
-          <mat-progress-spinner [diameter]="40" class="example-margin" [color]="color" [mode]="mode"
-            [value]="progressSpinnerValue*100/60">
 
-          </mat-progress-spinner>
-        </mat-card-header>
+
+        <div style="display: flex; flex-direction: row; justify-content:flex-start;">
+
+          <div style="display: flex; ">
+
+            <mat-card-header>
+              <mat-card-title style="color: #181544;">Sipariş Detayı</mat-card-title>
+              <mat-card-subtitle #myid> {{foo(order.orderDate, this.date )}} dakika önce sipariş
+                verildi</mat-card-subtitle>
+
+            </mat-card-header>
+          </div>
+
+          <div style="display: flex;flex: 1; justify-content: center; padding-top: 15px; "  >
+            <mat-progress-spinner [diameter]="40" class="example-margin" [color]="color" [mode]="mode"
+              [value]="progressSpinnerValue*100/60">
+
+            </mat-progress-spinner>
+          </div>
+
+
+        </div>
+
         <mat-divider></mat-divider>
 
 
@@ -55,17 +70,17 @@
 
           <div style="display: flex; flex-direction: column; flex: 1;">
             <mat-card-subtitle style="font-weight: bold;">
-              Sipariş Lokasyonu:
+              Sipariş Lokasyonu
             </mat-card-subtitle>
             <mat-card-content> {{order.location?.department}} {{order.location?.meetingRoom}} </mat-card-content>
 
             <mat-card-subtitle style="font-weight: bold;">
-              Sipariş Sahibi:
+              Sipariş Sahibi
             </mat-card-subtitle>
             <mat-card-content>{{order.orderedBy?.name}} {{order.orderedBy?.surname}}</mat-card-content>
 
             <mat-card-subtitle style="font-weight: bold;">
-              Sipariş Saati:
+              Sipariş Saati
             </mat-card-subtitle>
             <mat-card-content style="font-weight: bold;"> {{order.orderDate | date:'HH:mm'}}</mat-card-content>
 

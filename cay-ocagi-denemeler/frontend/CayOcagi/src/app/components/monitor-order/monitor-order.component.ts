@@ -5,6 +5,8 @@ import { first, min, timer } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { DatePipe } from '@angular/common';
+import { MatCardSubtitle } from '@angular/material/card';
 
 
 @Component({
@@ -16,14 +18,14 @@ export class MonitorOrderComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
 
+  @ViewChild('myid') myid:MatCardSubtitle; 
+
   constructor(private orderService: OrderService) { }
 
-  date: Date = new Date(); 
-
-
+  date: Date= new Date(); 
   departmentSelection: string = 'ARGE'
 
-  progressSpinnerValue: number = 15;
+  progressSpinnerValue: number = 0;
 
   orderList: Order[] = [];
 
@@ -31,12 +33,20 @@ export class MonitorOrderComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
+
     this.orderService.getOrderByDepartment(this.departmentSelection).subscribe({
       next: (orders) => {
         this.orderList = orders;
         this.previousOrderList = this.orderList;
-
       }
+    })
+
+    timer(60000, 60000).subscribe(() => {
+
+      this.date=new Date();
+      
     })
 
     timer(3000, 3000).subscribe(() => {
@@ -113,50 +123,80 @@ export class MonitorOrderComponent implements OnInit {
   }
 
 
-  checkDuration() {
+  // checkDuration() {
 
-    var houseDifference= this.subtractMinutes(this.orderList.at(0).orderDate, new Date() )
+  //   var houseDifference= this.subtractMinutes(this.orderList.at(0).orderDate, new Date() )
 
-   console.log( this.convert(this.orderList.at(0).orderDate).minutes)
+  //  console.log( this.convert(this.orderList.at(0).orderDate).minutes)
 
    
-    return houseDifference
-  }
+  //   return houseDifference
+  // }
+
+  
 
 
+  // convert(orderDate: Date) {
 
-  convert(orderDate: Date) {
+  //   var hhmm = {
+  //     hours: 0,
 
-    var hhmm = {
-      hours: 0,
+  //     minutes: 0
 
-      minutes: 0
+  //   }
 
-    }
+  //   let date = orderDate
 
-    let date = orderDate
+  //   let h = new Date(date)
 
-    let h = new Date(date)
+  //   let hours = h.getHours()
+  //   let minutes = h.getMinutes()
 
-    let hours = h.getHours()
-    let minutes = h.getMinutes()
+  //   hhmm.hours = hours;
+  //   hhmm.minutes = minutes
 
-    hhmm.hours = hours;
-    hhmm.minutes = minutes
+  //   return hhmm
+  // }
 
-    return hhmm
-  }
+  // subtractMinutes(date1: Date, date2: Date) {
+  //   var firstDate = this.convert(date1)
+  //   var secondDate = this.convert(date2)
 
-  subtractMinutes(date1: Date, date2: Date) {
-    var firstDate = this.convert(date1)
-    var secondDate = this.convert(date2)
+  //   var minuteDiff = Math.abs(firstDate.minutes - secondDate.minutes)
+  //   var hourDiff =  Math.abs(firstDate.hours - secondDate.hours)*60
+  //   var res = minuteDiff+hourDiff
 
-    var minuteDiff = Math.abs(firstDate.minutes - secondDate.minutes)
-    var hourDiff =  Math.abs(firstDate.hours - secondDate.hours)*60
-    var res = minuteDiff+hourDiff
+  //   this.progressSpinnerValue=res
+  //   return this.progressSpinnerValue
+  // }
 
-    this.progressSpinnerValue=res
+
+  foo(date1: Date, date2: Date) {
+
+    // var firstDate = this.convert(date1)
+    // var secondDate = this.convert(date2)
+
+    var res= Math.floor((new Date(date1).getTime() - new Date(date2).getTime())) / 60000
+    this.progressSpinnerValue=Math.abs(Math.trunc(res))
+
+
+    this.changeSpinnerColor(this.progressSpinnerValue)
+
     return this.progressSpinnerValue
+  }
+
+
+  changeSpinnerColor(diff: number)
+  {
+    if(diff>=0 && diff<=20)
+    {
+      this.color='primary'
+    }
+    else if (diff>20 && diff<=40)
+    {
+      this.color='accent'
+    }
+    else this.color='warn'
   }
 
 
