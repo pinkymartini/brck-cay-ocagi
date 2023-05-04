@@ -54,6 +54,7 @@ export class MonitorOrderComponent implements OnInit {
       this.orderService.getOrderByDepartment(this.departmentSelection).subscribe({
         next: (orders) => {
           this.orderList = orders;
+         
 
           if (!this.arraysEqual(this.previousOrderList, this.orderList)) {
             let prevIds = this.previousOrderList.map(order => order.orderId);
@@ -86,30 +87,7 @@ export class MonitorOrderComponent implements OnInit {
 
   }
 
-  getOrderByDepartment(departmentSelection: string) {
-   
-   
-      this.orderService.getOrderByDepartment(departmentSelection).
-        subscribe({
-          next: (orders) => {
-            this.orderList = orders;
 
-
-          }
-        })
-  
-  }
-
-  getOrders() {
-
-    this.orderService.getOrders().
-      subscribe({
-        next: (orders) => {
-          this.orderList = orders;
-        }
-      })
-
-  }
 
   scroll(id: string) {
     setTimeout(() => {

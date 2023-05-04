@@ -1,4 +1,4 @@
-<div style="background-color: #d1edff;">
+<div style="background-color: #d1edff;  max-width: 100%; margin-top: 10px; margin-right: 10px;" >
   <div style="display: flex; flex-direction: row-reverse;">
     <mat-form-field>
       <mat-label>Departman</mat-label>
@@ -14,7 +14,7 @@
   </div>
 
 
-  <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center;">
+  <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center; ">
     <h1 style="color: #181544;">{{departmentSelection}} SİPARİŞLERİ</h1>
 
     <div *ngFor="let order of orderList">
@@ -23,7 +23,7 @@
 
         <div style="display: flex; flex-direction: row; justify-content:flex-start;">
 
-          <div style="display: flex; ">
+          <div style="display: flex; flex-grow: 1;">
 
             <mat-card-header>
               <mat-card-title style="color: #181544;">Sipariş Detayı</mat-card-title>
@@ -34,7 +34,7 @@
           </div>
 
           <div style="display: flex;flex: 1; justify-content: center; padding-top: 15px; "  >
-            <mat-progress-spinner [diameter]="40" class="example-margin" [color]="color" [mode]="mode"
+            <mat-progress-spinner [diameter]="45" class="example-margin" [color]="color" [mode]="mode"
               [value]="progressSpinnerValue*100/60">
 
             </mat-progress-spinner>
@@ -97,7 +97,7 @@
 
         <mat-divider></mat-divider>
         <mat-card-footer style="display: flex; flex-direction: row-reverse;">
-          <button mat-button color="warn" (click)="deleteOrder(order.orderId)">Onayla ve Sil</button>
+          <button mat-raised-button color="warn" (click)="deleteOrder(order.orderId)">Onayla ve Sil</button>
         </mat-card-footer>
       </mat-card>
 

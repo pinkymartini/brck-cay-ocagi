@@ -18,9 +18,9 @@ import { User } from 'src/models/user';
 })
 
 export class CreateOrderComponent implements OnInit {
-  @ViewChild('stepper') stepper:MatStepper; 
+  @ViewChild('stepper') stepper: MatStepper;
 
-  
+
   toggle(str: string, num: number) {
     this._drinks[num].selectedOption = str
   }
@@ -77,6 +77,14 @@ export class CreateOrderComponent implements OnInit {
   isCartEmpty: boolean = true;
   totalItems: number = 0;
 
+  find(name: string) {
+    var c = this._drinks?.find(e => e.name == name)
+    console.log(c);
+    console.log(c?.name)
+    return c?.selectedOption;
+  }
+
+
 
   get_total() {
     var res = 0;
@@ -96,23 +104,29 @@ export class CreateOrderComponent implements OnInit {
 
   func(drinkOfChoice: string, op: string, selectedOption?: string) {
 
-    var drink = this._drinks.find(x => x.name == drinkOfChoice)
+    console.log('called')
+    
+    var drink = this._drinks?.find(x => x.name == drinkOfChoice)
+     
+    
 
-
-    if (drink.name == 'Ihlamur' || drink.name == 'Filtre Kahve') {
-      console.log(drink.name)
-      var qty = drink.quantity
+    if (drink?.name == 'Ihlamur' || drink?.name == 'Filtre Kahve') {
+      //console.log(drink.name)
+      var qty = drink?.quantity
+      console.log('called2')
     }
     else {
-      var qty = drink.quantityMap.get(selectedOption)
+      var qty = drink?.quantityMap.get(selectedOption)
     }
+
+    
 
 
     qty += 1;
     var product = <Product>{
 
       quantity: qty,
-      name: drink.name,
+      name: drink?.name,
       type: selectedOption,
       productId: '00000000-0000-0000-0000-000000000000'
     }
@@ -173,7 +187,7 @@ export class CreateOrderComponent implements OnInit {
 
 
 
-  constructor(private orderService: OrderService, private _formBuilder: FormBuilder, public dialog: MatDialog, private _snackBar: MatSnackBar, ) { }
+  constructor(private orderService: OrderService, private _formBuilder: FormBuilder, public dialog: MatDialog, private _snackBar: MatSnackBar,) { }
 
 
 
@@ -184,8 +198,7 @@ export class CreateOrderComponent implements OnInit {
     this._snackBar.open(message, action, { duration: 4000 });
   }
 
-  reset()
-  {
+  reset() {
     //this.stepper.reset()
   }
 
@@ -322,13 +335,19 @@ export class CreateOrderComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
-      width: '300px',
-      data: { cart: this.cart }
+      width: '400px',
+      data: { cart: this.cart, drinks: this._drinks,  func: this.func,  
+        addToCart:this.addToCart, 
+        removeFromCart: this.removeFromCart,
+        clearOtherProduct:this.clearOtherProduct,
+     
+        find:this.find }
+     
     });
 
     const sub = dialogRef.componentInstance.onAdd.subscribe(() => {
       this.cart = []
-      this.isCartEmpty=true;
+      this.isCartEmpty = true;
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -349,8 +368,8 @@ export class CreateOrderComponent implements OnInit {
     <h2 mat-dialog-title>Sepetim</h2>
     <div mat-dialog-content >
 
-    <div *ngIf="data.cart;  else emptyCart">
-
+    <div *ngIf="data.cart && data.cart.length;  else emptyCart">
+  
     <!-- this works. but need cleanup? -->
     
 
@@ -358,10 +377,25 @@ export class CreateOrderComponent implements OnInit {
 
       <div *ngIf="item.quantity!=0 else noteBlock">
 
+     
+
+      <div style="display: flex; flex-direction: row; gap:100px " >
+
+      <p> {{item.quantity}} Adet {{item.type | titlecaseTurkish}} {{item.name}} </p> 
       
+      
+      <div style = "display: flex; flex-direction: row;  flex:1 ;  justify-content: flex-end;">
+      <button mat-mini-fab color="primary" (click)="addToCart(item)" >
+      <mat-icon>add</mat-icon>
 
 
-      <p> {{item.quantity}} Adet {{item.type | titlecaseTurkish}} {{item.name}} </p>
+      </button>
+      <button mat-mini-fab color="warn" (click)="removeFromCart(item)">
+      <mat-icon>remove</mat-icon>
+      </button>
+      </div>
+      
+      </div>
       
       </div>
 
@@ -385,12 +419,13 @@ export class CreateOrderComponent implements OnInit {
       <div style= "display: flex; flex-direction:row">
       <button mat-button (click)="closeDialog()">Kapat</button>
       <button mat-button (click)="EmptyCart()">Sepeti Boşalt</button>
-      <div>
+      </div>
+    </div>
     </div>
   `
 })
 export class DialogComponent {
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, ) { }
 
   closeDialog() {
     this.dialogRef.close();
@@ -398,10 +433,30 @@ export class DialogComponent {
 
   onAdd = new EventEmitter();
 
+  onAdd2 = new EventEmitter();
+
+  onAdd3 = new EventEmitter();
+
   EmptyCart() {
     this.onAdd.emit();
     this.data.cart = []
   }
+
+  addToCart(product:Product)
+  {
+    
+    this.onAdd2.emit();  
+    this.data.addToCart(product)
+ 
+  }
+
+  removeFromCart(product: Product)
+  {
+    this.onAdd3.emit();
+    this.data.removeFromCart(product);
+  }
+
+  
 
 }
 

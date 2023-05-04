@@ -26,7 +26,11 @@ export class OrderService {
   }
 
   getOrderByDepartment(department:string):Observable<Order[]>{
-    return this.http.get<Order[]>('https://localhost:7265/GetOrderByDepartment?Department='+department);
+    if(department=='ALL')
+    {
+      return this.getOrders()
+    }
+    else return this.http.get<Order[]>('https://localhost:7265/GetOrderByDepartment?Department='+department);
   }
 
 

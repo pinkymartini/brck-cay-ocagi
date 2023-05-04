@@ -1,69 +1,108 @@
-.wrapper{
-    position: relative;
-    }
-    
-    .wrapper span {
-        position: absolute;
-        top: -2px;
-        right: -10px;
-        border-radius: 50%;
-        height: 30px;
-        width: 30px;
-        line-height: 25px;
-        text-align: center;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: aqua;
-        border: 2px solid white;
-      }
+.wrapper {
+  position: relative;
+}
 
-      .centered {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        
-      }
+.wrapper span {
+  position: absolute;
+  top: -2px;
+  right: -10px;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: aqua;
+  border: 2px solid white;
+}
 
-      .section {
-       
-        border: 1px solid #2d2d2d;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        
-      }
-      .content {
-       
-        /* position: absolute; Can also be `fixed` */
-        /* left: 0;
+.centered {
+
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width: fit-content !important; */
+  overflow: auto;
+  
+}
+
+.section {
+
+  border: 1px solid #2d2d2d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+.content {
+
+  /* position: absolute; Can also be `fixed` */
+  /* left: 0;
         top: 0; */
-        
-        /* bottom: 10%;
+
+  /* bottom: 10%;
         top: 50%;
         left: 50%;
         margin: auto; */
-        /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
-        /* max-width: 100%;
+  /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+  /* max-width: 100%;
         max-height: 100%;
        
         transform: translate(-50%, -50%); */
-        width: fit-content;
-        margin: 0 auto;
-         max-width: 100%;
-        max-height: 100%;
-        top: 50%;
-        left: 50%;
-      }
-      
+  width: fit-content;
+  /* height: fit-content; */
+  margin: 0 auto;
+ 
+  max-height: 100%; 
+  top: 0;
+  left:0;
+  /* left: 50%;
 
-      .stepper-old{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      
+height: fit-content;
 
-      
+  border-style: solid;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  */
+}
+
+
+.stepper-old {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+
+}
+
+.stepper-new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+@media only screen and (max-width: 600px) {
+  .stepper-new {
+    max-height: 90%;
+    max-width: 90%;
+  }
+}
+
+.shop-item{
+  display: flex; flex:1; flex-direction: column; width: 200px; align-items: center;
+}
+
+.order-form{
+  display: flex; flex:1; gap: 20px;  flex-wrap: wrap; flex-direction: row;  margin-top: 10px;
+}
