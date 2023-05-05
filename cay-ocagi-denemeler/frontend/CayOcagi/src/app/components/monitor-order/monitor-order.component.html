@@ -1,5 +1,5 @@
-<div style="background-color: #d1edff;  max-width: 100%; margin-top: 10px; margin-right: 10px;" >
-  <div style="display: flex; flex-direction: row-reverse;">
+<div style="background-color: #d1edff;  width: 1000px; max-width: 1000px; min-height:1000px; margin-top: 10px; margin-right: 10px; border-style: solid;" >
+  <div style="display: flex; flex-direction: row-reverse; border: solid red; ">
     <mat-form-field>
       <mat-label>Departman</mat-label>
       <mat-select required name="department" [(ngModel)]="departmentSelection">
@@ -14,7 +14,7 @@
   </div>
 
 
-  <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center; ">
+  <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center; border: seagreen solid; ">
     <h1 style="color: #181544;">{{departmentSelection}} SİPARİŞLERİ</h1>
 
     <div *ngFor="let order of orderList">

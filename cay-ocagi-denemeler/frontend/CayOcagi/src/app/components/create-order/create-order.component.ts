@@ -1,6 +1,6 @@
-import { Component, ElementRef, EventEmitter, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
@@ -10,6 +10,7 @@ import { Drinks } from 'src/models/drinks';
 import { Order } from 'src/models/order';
 import { Product } from 'src/models/product';
 import { User } from 'src/models/user';
+import { DialogComponent } from './DialogComponent';
 
 @Component({
   selector: 'app-create-order',
@@ -67,15 +68,32 @@ export class CreateOrderComponent implements OnInit {
   ]
   //drinks modeline gerek yok esasen.
 
+  isTextFieldOpen: boolean = false;
+
+  
+
   otherProduct: Product = {
     productId: '00000000-0000-0000-0000-000000000000',
     name: '',
-    quantity: 0,
-    type: ''
+    quantity: 1,
+    type: 'other'
   }
 
   isCartEmpty: boolean = true;
   totalItems: number = 0;
+
+
+  showTextField()
+  {
+    if (this.isTextFieldOpen)
+    {
+      this.isTextFieldOpen=!this.isTextFieldOpen
+    }
+
+  }
+
+
+
 
   find(name: string) {
     var c = this._drinks?.find(e => e.name == name)
@@ -359,107 +377,5 @@ export class CreateOrderComponent implements OnInit {
   }
 
 }
-
-//these components may be moved to another file ??
-
-@Component({
-  selector: 'app-dialog-component',
-  template: `
-    <h2 mat-dialog-title>Sepetim</h2>
-    <div mat-dialog-content >
-
-    <div *ngIf="data.cart && data.cart.length;  else emptyCart">
-  
-    <!-- this works. but need cleanup? -->
-    
-
-      <div *ngFor="let item of data.cart" >
-
-      <div *ngIf="item.quantity!=0 else noteBlock">
-
-     
-
-      <div style="display: flex; flex-direction: row; gap:100px " >
-
-      <p> {{item.quantity}} Adet {{item.type | titlecaseTurkish}} {{item.name}} </p> 
-      
-      
-      <div style = "display: flex; flex-direction: row;  flex:1 ;  justify-content: flex-end;">
-      <button mat-mini-fab color="primary" (click)="addToCart(item)" >
-      <mat-icon>add</mat-icon>
-
-
-      </button>
-      <button mat-mini-fab color="warn" (click)="removeFromCart(item)">
-      <mat-icon>remove</mat-icon>
-      </button>
-      </div>
-      
-      </div>
-      
-      </div>
-
-      <ng-template #noteBlock>
-          <p>
-           {{item.name}}</p>
-          </ng-template>
-
-      </div>
-    </div>
-
-        <ng-template #emptyCart>
-          <p>
-            Sepetinizde Ürün Bulunmamaktadır.</p>
-          </ng-template>
-
-        
-
-
-    <div mat-dialog-actions>
-      <div style= "display: flex; flex-direction:row">
-      <button mat-button (click)="closeDialog()">Kapat</button>
-      <button mat-button (click)="EmptyCart()">Sepeti Boşalt</button>
-      </div>
-    </div>
-    </div>
-  `
-})
-export class DialogComponent {
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, ) { }
-
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
-  onAdd = new EventEmitter();
-
-  onAdd2 = new EventEmitter();
-
-  onAdd3 = new EventEmitter();
-
-  EmptyCart() {
-    this.onAdd.emit();
-    this.data.cart = []
-  }
-
-  addToCart(product:Product)
-  {
-    
-    this.onAdd2.emit();  
-    this.data.addToCart(product)
- 
-  }
-
-  removeFromCart(product: Product)
-  {
-    this.onAdd3.emit();
-    this.data.removeFromCart(product);
-  }
-
-  
-
-}
-
-
 
 

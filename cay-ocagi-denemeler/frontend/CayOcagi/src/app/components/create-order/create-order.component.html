@@ -1,8 +1,6 @@
-<div style="align-items: center;justify-content: center; 
-margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
+<div style="margin: auto; display: flex; flex: 1; justify-content: center; align-items: center; align-self: center; ">
 
-
-    <mat-stepper [linear]=true #stepper style=" background-color: #d1edff;  " class="">
+    <mat-stepper [linear]=true #stepper style="  background-color: #d1edff;  " class="">
 
         <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup" style="margin-top: 10px;">
@@ -19,7 +17,7 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
 
                     <mat-form-field appearance="fill">
                         <mat-label>Sipariş Yeri</mat-label>
-                        <mat-select name="locationSelection " formControlName="departmentOrderCtrl">
+                        <mat-select required name="locationSelection " formControlName="departmentOrderCtrl">
                             <mat-option [value]="false" #matOption (click)="orderToWorkingStation()">Masama
                                 Gelsin</mat-option>
                             <mat-option [value]="true">Departman Seçmek İstiyorum</mat-option>
@@ -81,9 +79,6 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
 
 
 
-
-
-
         <mat-step [stepControl]="thirdFormGroup" label="Siparişiniz" style="">
             <form [formGroup]="thirdFormGroup" (ngSubmit)="createNewOrder( newOrderDetails)">
                 <div class="order-form">
@@ -109,22 +104,9 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
                                 <mat-icon>remove</mat-icon>
                             </button>
 
-
-
-                            <!-- <button mat-icon-button type="button" (click)="func2()"
-                            (click)="log()">
-                            <mat-icon>remove</mat-icon>
-                        
-                        </button> -->
-
-
                         </div>
 
-
-
                     </div>
-
-
 
                     <div class="shop-item">
                         <div style="font-weight: bold;">Ihlamur</div>
@@ -139,7 +121,6 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
 
                         </div>
                     </div>
-
 
                     <div class="shop-item">
                         <div style="font-weight: bold;">Filtre Kahve</div>
@@ -158,14 +139,13 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
 
                     </div>
 
-
                     <div class="shop-item">
                         <div style="font-weight: bold;">Türk Kahvesi</div>
                         <img src="../../assets/images/tkahvesi.jfif" alt="" height="100px" width="100px">
 
                         <div style="width: 225px; ">
                             <mat-chip-listbox aria-label="Priority Level">
-                                <mat-chip-option removable="false" selected="true"
+                                <mat-chip-option removable="false" selected="true" 
                                     (selectionChange)="toggle('SADE',0)">Sade</mat-chip-option>
                                 <mat-chip-option removable="false"
                                     (selectionChange)="toggle('ORTA',0)">Orta</mat-chip-option>
@@ -188,12 +168,12 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
 
                     </div>
 
-                    <div style="">
+                    <div class="shop-item">
                         <form #Form="ngForm" (ngSubmit)="addToCart(otherProduct)" #formDirective="ngForm"
-                            style="display:  flex; flex:1; flex-direction: column;">
+                            style="display:  flex; flex:1; flex-direction: column;" >
                             <div style="font-weight: bold;">Başka Bir İsteğim Var</div>
                             <div style="display: flex; flex-direction: row; ">
-                                <mat-form-field>
+                                <mat-form-field >
                                     <mat-label>Notunuz </mat-label>
                                     <textarea matInput name="name" [(ngModel)]="otherProduct.name" style="height: 100px;
                                      resize: none;"></textarea>
@@ -210,15 +190,12 @@ margin:  auto; display: flex;  overflow-y: scroll; border-style: solid; ">
 
                 </div>
 
-
-                <div style="display: flex; flex:1; margin-top: 50px ; justify-content: space-between;">
+                <div style="display: flex; flex:1; margin-top: 50px ; justify-content: space-between; ">
                     <button mat-raised-button color="primary" matStepperPrevious>Önceki Adım</button>
                     <div style=" display: flex; flex:1; justify-content: end;"> <button mat-raised-button type="submit"
                             color="accent" [disabled]="isCartEmpty"> Siparişi Onayla</button> </div>
                 </div>
-                <!-- 
-                <div style=" display: flex; justify-content: end;"> <button mat-raised-button type="submit"
-                        color="accent" [disabled]="isCartEmpty"> Siparişi Onayla</button> </div> -->
+
             </form>
 
             <div style="display: flex; flex:1; flex-direction: row; gap: 10px; margin-top: 50px; ">
