@@ -166,7 +166,7 @@ export class CreateOrderComponent implements OnInit {
 
   }
 
-
+  errorMessage: string= ''
 
 
   departmentOrder: boolean = false;
@@ -310,10 +310,16 @@ export class CreateOrderComponent implements OnInit {
             this.clearOrder();
             this.cart = [];
             this.isCartEmpty = true
-            this.openSnackBar('Siparişiniz Alınmıştır ✓', 'Kapat');
+            if(orders){
+              this.openSnackBar('Siparişiniz Alınmıştır ✓', 'Kapat');
+            }
+           
             this.stepper.reset()
           }
         })
+      },
+      error: (err) => {
+        this.openSnackBar('Bağlantı Hatası!', 'Kapat')
       }
     })
 

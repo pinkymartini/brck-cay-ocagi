@@ -23,7 +23,7 @@ import { Product } from 'src/models/product';
 
       <div style="display: flex; flex-direction: row; gap:100px " >
 
-      <p> {{item.quantity}} Adet {{item.type | titlecaseTurkish}} {{item.name}} </p> 
+      <p > {{item.quantity}} Adet {{item.type | titlecaseTurkish}} {{item.name}} </p> 
       
       
       <div style = "display: flex; flex-direction: row;  flex:1 ;  justify-content: flex-end;">
@@ -44,7 +44,7 @@ import { Product } from 'src/models/product';
       <ng-template #noteBlock>
 
       <div style="display: flex; flex-direction: row; gap:100px;  flex: 1 " >
-          <p>
+          <p >
            {{item.name}}
           </p>
           <div style="display: flex; justify-content: flex-end; flex:1">
@@ -62,7 +62,7 @@ import { Product } from 'src/models/product';
     </div>
 
         <ng-template #emptyCart>
-          <p>
+          <p style="">
             <mat-icon>warning</mat-icon>
             Sepetinizde Ürün Bulunmamaktadır.
             </p>
