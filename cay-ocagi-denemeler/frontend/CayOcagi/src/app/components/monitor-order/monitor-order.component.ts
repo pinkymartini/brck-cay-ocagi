@@ -56,11 +56,11 @@ export class MonitorOrderComponent implements OnInit {
           this.orderList = orders;
          
 
-          if (!this.arraysEqual(this.previousOrderList, this.orderList)) {
-            let prevIds = this.previousOrderList.map(order => order.orderId);
+          if (!this.arraysEqual(this.previousOrderList, this.orderList) && this.orderList.length!=0 ) {
+            let prevIDs = this.previousOrderList.map(order => order.orderId);
             let orderIDs = this.orderList.map(order => order.orderId);
 
-            if (prevIds.every(r => orderIDs.includes(r))) {
+            if (prevIDs.every(r => orderIDs.includes(r))) {
               this.scroll('target');
             }
             this.previousOrderList = this.orderList;
@@ -101,52 +101,6 @@ export class MonitorOrderComponent implements OnInit {
   }
 
 
-  // checkDuration() {
-
-  //   var houseDifference= this.subtractMinutes(this.orderList.at(0).orderDate, new Date() )
-
-  //  console.log( this.convert(this.orderList.at(0).orderDate).minutes)
-
-   
-  //   return houseDifference
-  // }
-
-  
-
-
-  // convert(orderDate: Date) {
-
-  //   var hhmm = {
-  //     hours: 0,
-
-  //     minutes: 0
-
-  //   }
-
-  //   let date = orderDate
-
-  //   let h = new Date(date)
-
-  //   let hours = h.getHours()
-  //   let minutes = h.getMinutes()
-
-  //   hhmm.hours = hours;
-  //   hhmm.minutes = minutes
-
-  //   return hhmm
-  // }
-
-  // subtractMinutes(date1: Date, date2: Date) {
-  //   var firstDate = this.convert(date1)
-  //   var secondDate = this.convert(date2)
-
-  //   var minuteDiff = Math.abs(firstDate.minutes - secondDate.minutes)
-  //   var hourDiff =  Math.abs(firstDate.hours - secondDate.hours)*60
-  //   var res = minuteDiff+hourDiff
-
-  //   this.progressSpinnerValue=res
-  //   return this.progressSpinnerValue
-  // }
 
 
   foo(date1: Date, date2: Date) {

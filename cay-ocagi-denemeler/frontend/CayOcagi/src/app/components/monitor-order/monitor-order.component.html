@@ -13,6 +13,7 @@
     </mat-form-field>
   </div>
 
+  <div *ngIf="orderList.length!=0 else elseBlock2">
 
   <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center; border: seagreen solid; ">
     <h1 style="color: #181544;">{{departmentSelection}} SİPARİŞLERİ</h1>
@@ -50,7 +51,7 @@
           <div style="display: flex; flex-direction: column;  flex: 1;">
             <div *ngFor="let product of order.products;">
 
-              <div *ngIf="product.quantity!=0 else elseBlock">
+              <div *ngIf="product.quantity!=0 &&product.type!='other' else elseBlock">
                 <mat-card-content>
                   • {{product.quantity}} {{product.type| titlecaseTurkish }} {{product.name}}
                 </mat-card-content>
@@ -107,12 +108,11 @@
     </div>
     <div id="target"></div>
   </div>
+ 
+
+  </div>
+  <ng-template #elseBlock2>
+    <h1 style="text-align: center;">Henüz bir sipariş yok.</h1>
+  </ng-template>
 </div>
 
-
-
-<!-- <div >
-  <p>
-   {{subtractMinutes(order.orderDate, new Date()  )}} dakika önce sipariş verildi
-  </p>
-</div> -->

@@ -21,6 +21,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import { TitleCaseTurkishPipe } from './pipes/titlecase-turkish.pipe';
@@ -54,8 +55,8 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     MatSnackBarModule,
     MatChipsModule,
     MatDividerModule,
-    MatProgressSpinnerModule
-    
+    MatProgressSpinnerModule,
+    MatTooltipModule
    
   ],
   providers: [],

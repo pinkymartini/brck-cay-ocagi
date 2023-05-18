@@ -27,8 +27,7 @@
                 </div>
 
                 <div>
-                    <button mat-raised-button color="primary" [disabled]="!fullName" matStepperNext>Sonraki
-                        Adım</button>
+                    <button matTooltip="Sonraki Adım" mat-raised-button color="primary" [disabled]="!fullName" matStepperNext>→</button>
 
                 </div>
             </form>
@@ -70,8 +69,8 @@
                 </mat-form-field>
 
                 <div style="display: flex; flex:1; justify-content: space-between ; gap: 60px;">
-                    <button mat-raised-button color="primary" matStepperPrevious>Önceki Adım</button>
-                    <button mat-raised-button color="primary" matStepperNext>Sonraki Adım</button>
+                    <button matTooltip="Önceki Adım" mat-raised-button color="primary" matStepperPrevious>←</button>
+                    <button matTooltip="Sonraki Adım" mat-raised-button color="primary" matStepperNext>→</button>
                 </div>
             </form>
         </mat-step>
@@ -191,7 +190,7 @@
                 </div>
 
                 <div style="display: flex; flex:1; margin-top: 50px ; justify-content: space-between; ">
-                    <button mat-raised-button color="primary" matStepperPrevious>Önceki Adım</button>
+                    <button matTooltip="Önceki Adım" mat-raised-button color="primary" matStepperPrevious>←</button>
                     <div style=" display: flex; flex:1; justify-content: end;"> <button mat-raised-button type="submit"
                             color="accent" [disabled]="isCartEmpty"> Siparişi Onayla</button> </div>
                 </div>
