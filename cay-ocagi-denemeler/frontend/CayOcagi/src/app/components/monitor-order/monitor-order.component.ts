@@ -7,6 +7,7 @@ import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 import { MatCardSubtitle } from '@angular/material/card';
+import { Product } from 'src/models/product';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { MatCardSubtitle } from '@angular/material/card';
 })
 export class MonitorOrderComponent implements OnInit {
   color: ThemePalette = 'primary';
-  mode: ProgressSpinnerMode = 'determinate';
+  mode: ProgressSpinnerMode = 'determinate'; //determinate
 
   @ViewChild('myid') myid:MatCardSubtitle; 
 
@@ -38,6 +39,7 @@ export class MonitorOrderComponent implements OnInit {
 
     this.orderService.getOrderByDepartment(this.departmentSelection).subscribe({
       next: (orders) => {
+        
         this.orderList = orders;
         this.previousOrderList = this.orderList;
       }
@@ -61,13 +63,19 @@ export class MonitorOrderComponent implements OnInit {
             let orderIDs = this.orderList.map(order => order.orderId);
 
             if (prevIDs.every(r => orderIDs.includes(r))) {
-              this.scroll('target');
+              //this.scroll('target');
+              this.playSound("../../assets/sounds/New Order Notification.mp3")
             }
             this.previousOrderList = this.orderList;
           }
         }
       })
     });
+  }
+
+  playSound(url: string) {
+    const audio = new Audio(url);
+    audio.play();
   }
 
   deleteOrder(id: string) {
@@ -87,18 +95,33 @@ export class MonitorOrderComponent implements OnInit {
 
   }
 
+  sortOrderProducts (products: Product[]) {
+    products.sort((a, b) => {
+      // Sort items with type "other" to appear last
+      if (a.type === "other" && b.type !== "other") {
+        return 1;
+      }
+      if (a.type !== "other" && b.type === "other") {
+        return -1;
+      }
 
-
-  scroll(id: string) {
-    setTimeout(() => {
-      const targetDiv = document.getElementById(id);
-      const rect = targetDiv.getBoundingClientRect();
-      window.scrollTo({
-        top: rect.top + window.pageYOffset,
-        behavior: 'smooth'
-      });
-    }, 0);
+      // Sort items alphabetically within the same type
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
   }
+
+
+
+  // scroll(id: string) {
+  //   setTimeout(() => {
+  //     const targetDiv = document.getElementById(id);
+  //     const rect = targetDiv.getBoundingClientRect();
+  //     window.scrollTo({
+  //       top: rect.top + window.pageYOffset,
+  //       behavior: 'smooth'
+  //     });
+  //   }, 0);
+  // }
 
 
 
@@ -123,12 +146,16 @@ export class MonitorOrderComponent implements OnInit {
     if(diff>=0 && diff<=20)
     {
       this.color='primary'
+      this.mode= 'indeterminate'
     }
     else if (diff>20 && diff<=40)
     {
       this.color='accent'
+      this.mode= 'indeterminate'
     }
-    else this.color='warn'
+    else { this.color='warn'
+    this.mode='determinate'
+    }
   }
 
 

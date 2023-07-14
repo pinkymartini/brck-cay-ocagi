@@ -6,7 +6,6 @@ import {MatIconModule} from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateOrderComponent } from './components/create-order/create-order.component';
-import { DialogComponent } from "./components/create-order/DialogComponent";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule, } from '@angular/material/select';
 import {MatInputModule, } from '@angular/material/input';
@@ -26,6 +25,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { TitleCaseTurkishPipe } from './pipes/titlecase-turkish.pipe';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { InformationTrackerComponent } from './components/information-tracker/information-tracker.component';
+import { CartComponent } from './components/cart/cart.component';
 
 
 @NgModule({
@@ -33,8 +34,11 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     AppComponent,
     CreateOrderComponent,
     MonitorOrderComponent,
-    DialogComponent,
-    TitleCaseTurkishPipe
+   
+    TitleCaseTurkishPipe,
+    InformationTrackerComponent,
+    CartComponent,
+  
    
   ],
   imports: [

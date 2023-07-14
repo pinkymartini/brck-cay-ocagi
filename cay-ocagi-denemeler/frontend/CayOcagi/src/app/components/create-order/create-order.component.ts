@@ -10,7 +10,8 @@ import { Drinks } from 'src/models/drinks';
 import { Order } from 'src/models/order';
 import { Product } from 'src/models/product';
 import { User } from 'src/models/user';
-import { DialogComponent } from './DialogComponent';
+
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-create-order',
@@ -70,7 +71,7 @@ export class CreateOrderComponent implements OnInit {
 
   isTextFieldOpen: boolean = false;
 
-  
+
 
   otherProduct: Product = {
     productId: '00000000-0000-0000-0000-000000000000',
@@ -83,11 +84,9 @@ export class CreateOrderComponent implements OnInit {
   totalItems: number = 0;
 
 
-  showTextField()
-  {
-    if (this.isTextFieldOpen)
-    {
-      this.isTextFieldOpen=!this.isTextFieldOpen
+  showTextField() {
+    if (this.isTextFieldOpen) {
+      this.isTextFieldOpen = !this.isTextFieldOpen
     }
 
   }
@@ -105,28 +104,31 @@ export class CreateOrderComponent implements OnInit {
 
 
   get_total() {
-    var res = 0;
-
+    let res = 0;
+  
     for (let item of this.cart) {
-      if (item.quantity == 0) {
-        res += 1;
+      if (item.type !== 'other') { 
+        if (item.quantity === 0) {
+          res += 1;
+        } else {
+          res += item.quantity;
+        }
       }
-
-      else res += item.quantity;
     }
-
+  
     return this.totalItems = res;
   }
+  
 
 
 
   func(drinkOfChoice: string, op: string, selectedOption?: string) {
 
     console.log('called')
-    
+
     var drink = this._drinks?.find(x => x.name == drinkOfChoice)
-     
-    
+
+
 
     if (drink?.name == 'Ihlamur' || drink?.name == 'Filtre Kahve') {
       //console.log(drink.name)
@@ -137,7 +139,7 @@ export class CreateOrderComponent implements OnInit {
       var qty = drink?.quantityMap.get(selectedOption)
     }
 
-    
+
 
 
     qty += 1;
@@ -166,7 +168,7 @@ export class CreateOrderComponent implements OnInit {
 
   }
 
-  errorMessage: string= ''
+  errorMessage: string = ''
 
 
   departmentOrder: boolean = false;
@@ -228,9 +230,9 @@ export class CreateOrderComponent implements OnInit {
         }
       })
 
-    this.firstFormGroup.controls.departmentOrderCtrl.valueChanges.subscribe(value => {
-      this.departmentOrder = value;
-    });
+    // this.firstFormGroup.controls.departmentOrderCtrl.valueChanges.subscribe(value => {
+    //   this.departmentOrder = value;
+    // });
   }
 
 
@@ -241,10 +243,34 @@ export class CreateOrderComponent implements OnInit {
     if (index !== -1) {
       if (this.cart[index].quantity === 1) {
         this.cart.splice(index, 1);
+
       } else {
         this.cart[index].quantity--;
       }
     }
+    // if(this.cart.length==0){
+    //   this.cart=[]
+    //   console.log("else")
+    //   this.isCartEmpty=true
+    // }
+
+    this.cart.sort((a, b) => {
+      // Sort items with type "other" to appear last
+      if (a.type === "other" && b.type !== "other") {
+        return 1;
+      }
+      if (a.type !== "other" && b.type === "other") {
+        return -1;
+      }
+
+      // Sort items alphabetically within the same type
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
+
+    // this.isCartEmpty = true;
+
+    // console.log(this.isCartEmpty)
+
 
   }
 
@@ -254,7 +280,7 @@ export class CreateOrderComponent implements OnInit {
     if (this.cart.some(e => e.name == product.name && e.type == product.type)) {
       var filteredProduct = this.cart.find(e => e.name == product.name && e.type == product.type)
       filteredProduct.quantity += 1;
-
+      console.log("create order list iff: ", this.cart)
     }
 
     else {
@@ -262,13 +288,34 @@ export class CreateOrderComponent implements OnInit {
       //eğer duplicate yoksa
       const newProduct = { ...product };
       this.cart.push(newProduct)
-      console.log(this.cart)
-      this.clearOtherProduct();
+      //console.log(this.cart)
 
+
+      console.log("create order list: ", this.cart)
 
     }
+
+    // this.cart.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+
+    // Sort the cart based on the type property
+    this.cart.sort((a, b) => {
+      // Sort items with type "other" to appear last
+      if (a.type === "other" && b.type !== "other") {
+        return 1;
+      }
+      if (a.type !== "other" && b.type === "other") {
+        return -1;
+      }
+
+      // Sort items alphabetically within the same type
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
+
+
+
     this.isCartEmpty = false;
 
+    this.clearOtherProduct();
 
   }
 
@@ -310,10 +357,10 @@ export class CreateOrderComponent implements OnInit {
             this.clearOrder();
             this.cart = [];
             this.isCartEmpty = true
-            if(orders){
+            if (orders) {
               this.openSnackBar('Siparişiniz Alınmıştır ✓', 'Kapat');
             }
-           
+
             this.stepper.reset()
           }
         })
@@ -344,11 +391,13 @@ export class CreateOrderComponent implements OnInit {
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
+    secondCtrl: ['', Validators.required],
+
     departmentOrderCtrl: [false],
 
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    //secondCtrl: ['', Validators.required],
     thirdCtrl: ['', Validators.required],
   });
 
@@ -358,15 +407,21 @@ export class CreateOrderComponent implements OnInit {
   });
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      data: { cart: this.cart, drinks: this._drinks,  func: this.func,  
-        addToCart:this.addToCart, 
+    const dialogRef = this.dialog.open(CartComponent, {
+      width: '550px',
+      // height:"700px",
+      data: {
+        cart: this.cart, drinks: this._drinks, func: this.func,
+        addToCart: this.addToCart,
         removeFromCart: this.removeFromCart,
-        clearOtherProduct:this.clearOtherProduct,
-     
-        find:this.find }
-     
+        clearOtherProduct: this.clearOtherProduct,
+        otherProduct: this.otherProduct,
+
+        isCartEmpty: this.isCartEmpty,
+
+        find: this.find
+      }
+
     });
 
     const sub = dialogRef.componentInstance.onAdd.subscribe(() => {

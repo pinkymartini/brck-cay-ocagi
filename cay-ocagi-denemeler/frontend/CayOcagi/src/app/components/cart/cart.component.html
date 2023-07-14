@@ -1,0 +1,122 @@
+<h2 mat-dialog-title>Sepetim</h2>
+
+<div mat-dialog-content *ngIf="data.cart && data.cart.length;  else emptyCart">
+    <div style="display: flex; flex-direction: row;">
+        <div style="flex: 1;">
+            <div *ngFor="let item of data.cart">
+                <div *ngIf="item.type !== 'other' && item.type!==undefined ">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px;">
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <p style="color: rgb(255, 90, 0);">{{ item.quantity }}</p>
+                                <p>&nbsp;{{ item.name }} ({{ item.type | titlecaseTurkish }})</p>
+                            </div>
+                            <div style="display: flex; gap: 5px;">
+                                <button matTooltip="Sepete Ekle" mat-mini-fab color="accent" (click)="addToCart(item)">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                <button matTooltip="Sepetten Çıkar" mat-mini-fab color="warn"
+                                    (click)="removeFromCart(item)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div *ngIf="item.type !== 'other' && item.type===undefined ">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px;">
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <p style="color: rgb(255, 90, 0);">{{ item.quantity }}</p>
+                                <p>&nbsp;{{ item.name }}</p>
+                            </div>
+                            <div style="display: flex; gap: 5px;">
+                                <button matTooltip="Sepete Ekle" mat-mini-fab color="accent" (click)="addToCart(item)">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                <button matTooltip="Sepetten Çıkar" mat-mini-fab color="warn"
+                                    (click)="removeFromCart(item)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+            </div>
+           
+        </div>
+        
+        <div style="flex: 1;">
+           
+            <div *ngFor="let item of data.cart">
+                
+                <div *ngIf="item.type === 'other'">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px;">
+                        
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>{{ item.name }}</p>
+                            <div style="display: flex; gap: 5px;">
+                                <button matTooltip="Notu Düzenle" mat-mini-fab (click)="fillform(item)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button color="primary" matTooltip="Notu Sil" mat-mini-fab
+                                    (click)="removeFromCart(item)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+    </div>
+
+
+</div>
+
+<ng-template #emptyCart>
+    <p style="color:red; display: flex; flex: 1; justify-content: center; ">
+        <mat-icon>warning</mat-icon>
+        Sepetinizde Ürün Bulunmamaktadır.
+    </p>
+</ng-template>
+
+<div mat-dialog-actions>
+    <div
+        style="display: flex; flex-direction: row;  align-items: center; gap: 10px; flex: 1;">
+        <div style="display: flex; justify-content: flex-start;">
+            <button mat-button color="accent" (click)="closeDialog()">Kapat</button>
+            <button mat-button color="warn" (click)="EmptyCart()">Sepeti Boşalt</button>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; flex: 1;">
+            <form #Form="ngForm" (ngSubmit)="addNote(data.otherProduct)" #formDirective="ngForm"
+                [hidden]="!showNoteForm"
+                style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+                <mat-form-field>
+                    <mat-label>Notunuz</mat-label>
+                    <textarea matInput name="name" [(ngModel)]="data.otherProduct.name"
+                        style="height: 25px; resize: none;"></textarea>
+                </mat-form-field>
+                <button matTooltip="Onayla" mat-mini-fab color="accent" type="submit"
+                    [disabled]="!data.otherProduct.name">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </form>
+        </div>
+
+        <button matTooltip="{{ cartToolTip }}" mat-mini-fab color="primary" (click)="showNoteFormFunc()">
+            <mat-icon>{{ icon }}</mat-icon>
+        </button>
+    </div>
+</div>

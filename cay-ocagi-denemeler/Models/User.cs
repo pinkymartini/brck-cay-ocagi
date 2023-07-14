@@ -5,7 +5,7 @@
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        //public string LocationPreference  { get; set; } //? 
+        //public string sessionid  { get; set; } //? 
 
 
           

@@ -1,6 +1,9 @@
-<div style="margin: auto; display: flex; flex: 1; justify-content: center; align-items: center; align-self: center; ">
+<div style="margin: auto; display: flex; flex: 1; justify-content: center; align-items: center; align-self: center; flex-direction: column;">
 
-    <mat-stepper [linear]=true #stepper style="  background-color: #d1edff;  " class="">
+    <h2 style="color: rgb(255, 90, 0); ">Borçelik Çay Ocağı</h2>
+    <!-- <img src="../../assets/images/brck.png" alt="" height="100px" width="100px" object-fit:cover> -->
+
+    <mat-stepper [linear]=true #stepper style="  background-color: white; border-radius: 25px; " color="accent">
 
         <mat-step [stepControl]="firstFormGroup">
             <form [formGroup]="firstFormGroup" style="margin-top: 10px;">
@@ -8,26 +11,33 @@
                 <div
                     style="display: flex; flex:1; flex-direction: column;justify-content: flex-start;align-items: flex-start; gap: 10px;">
 
-                    <ng-template matStepLabel>Bilgileriniz</ng-template>
+                    <ng-template matStepLabel>  <div style="color:black ;"> Bilgileriniz </div></ng-template>
                     <mat-form-field appearance="fill">
                         <mat-label>Ad, Soyad</mat-label>
                         <input matInput placeholder="Ad, Soyad" formControlName="firstCtrl" required
                             [(ngModel)]="fullName" (ngModelChange)="splitNameAndSurname($event)">
                     </mat-form-field>
 
-                    <mat-form-field appearance="fill">
-                        <mat-label>Sipariş Yeri</mat-label>
-                        <mat-select required name="locationSelection " formControlName="departmentOrderCtrl">
-                            <mat-option [value]="false" #matOption (click)="orderToWorkingStation()">Masama
-                                Gelsin</mat-option>
-                            <mat-option [value]="true">Departman Seçmek İstiyorum</mat-option>
-                        </mat-select>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Departman Seçiniz</mat-label>
+                      
+
+                        <mat-select required name="department" [(ngModel)]="newOrderDetails.location.department"
+                        [(ngModel)]="departmentSelection" formControlName="secondCtrl">
+                        <mat-option value="ARGE">ARGE</mat-option>
+                        <mat-option value="İNSAN KAYNAKLARI">İNSAN KAYNAKLARI</mat-option>
+                        <mat-option value="GENEL MÜDÜRLÜK ALT KAT">GENEL MÜDÜRLÜK ALT KAT</mat-option>
+                        <mat-option value="GENEL MÜDÜRLÜK ÜST KAT">GENEL MÜDÜRLÜK ÜST KAT</mat-option>
+                        <mat-option value="BTA">BTA</mat-option>
+                    </mat-select>
+
                     </mat-form-field>
 
                 </div>
 
                 <div>
-                    <button matTooltip="Sonraki Adım" mat-raised-button color="primary" [disabled]="!fullName" matStepperNext>→</button>
+                    <button matTooltip="Sonraki Adım" mat-raised-button color="primary" [disabled]="!fullName" matStepperNext>
+                    	<div style="color: white; font-size: 20px;">→</div></button>
 
                 </div>
             </form>
@@ -37,30 +47,20 @@
 
 
 
-        <mat-step label="Departman Seçin" *ngIf="departmentOrder" [stepControl]="secondFormGroup">
+        <mat-step label="Departman Seçin" [stepControl]="secondFormGroup">
             <form [formGroup]="secondFormGroup"
                 style="display: flex; flex:1; flex-direction: column;justify-content: center;align-items: center; margin-top: 10px;">
-                <ng-template matStepLabel>Departman Bilgisi</ng-template>
+                <ng-template matStepLabel>Sipariş Lokasyonu</ng-template>
+
+              
 
                 <mat-form-field appearance="fill">
-
-
-                    <mat-label>Departman</mat-label>
-                    <mat-select required name="department" [(ngModel)]="newOrderDetails.location.department"
-                        [(ngModel)]="departmentSelection" formControlName="secondCtrl">
-                        <mat-option value="ARGE">ARGE</mat-option>
-                        <mat-option value="İNSAN KAYNAKLARI">İNSAN KAYNAKLARI</mat-option>
-                        <mat-option value="GENEL MÜDÜRLÜK ALT KAT">GENEL MÜDÜRLÜK ALT KAT</mat-option>
-                        <mat-option value="GENEL MÜDÜRLÜK ÜST KAT">GENEL MÜDÜRLÜK ÜST KAT</mat-option>
-                        <mat-option value="BTA">BTA</mat-option>
-                    </mat-select>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Toplantı Odası</mat-label>
+                    <mat-label>Nereye Gelsin?</mat-label>
                     <mat-select required name="meeting room" [(ngModel)]="newOrderDetails.location.meetingRoom"
                         formControlName="thirdCtrl">
+
+                        <mat-option value="MASA" style="font-weight: bold;">Masama Gelsin</mat-option>
+                        
                         <mat-option *ngFor="let location of locations.get(departmentSelection)" [value]="location">
                             {{location}}
                         </mat-option>
@@ -69,8 +69,8 @@
                 </mat-form-field>
 
                 <div style="display: flex; flex:1; justify-content: space-between ; gap: 60px;">
-                    <button matTooltip="Önceki Adım" mat-raised-button color="primary" matStepperPrevious>←</button>
-                    <button matTooltip="Sonraki Adım" mat-raised-button color="primary" matStepperNext>→</button>
+                    <button matTooltip="Önceki Adım" mat-raised-button color="primary" matStepperPrevious><div style="color: white; font-size: 20px;">←</div></button>
+                    <button matTooltip="Sonraki Adım" mat-raised-button color="primary" matStepperNext><div style="color: white; font-size: 20px;">→</div></button>
                 </div>
             </form>
         </mat-step>
@@ -83,22 +83,22 @@
                 <div class="order-form">
 
                     <div class="shop-item">
-                        <div style="font-weight: bold;">Çay</div>
-                        <img src="../../assets/images/tea.jfif" alt="" height="100px" width="100px" object-fit:cover>
+                        <div style="font-weight: bold; ">Çay</div>
+                        <img src="../../assets/images/tea.jfif" alt="" height="100px" width="100px" object-fit:cover >
 
 
                         <mat-chip-listbox aria-label="Priority Level">
-                            <mat-chip-option selected="true"
+                            <mat-chip-option selected="true" color="accent"
                                 (selectionChange)="toggle('NORMAL',1)">Normal</mat-chip-option>
-                            <mat-chip-option (selectionChange)="toggle('AÇIK',1)">Açık</mat-chip-option>
+                            <mat-chip-option (selectionChange)="toggle('AÇIK',1)" color="accent">Açık</mat-chip-option>
                         </mat-chip-listbox>
 
                         <div>
-                            <button mat-icon-button type="button" (click)="func('Çay', '+', find('Çay'))"
+                            <button matTooltip="Sepete Ekle" mat-icon-button type="button" (click)="func('Çay', '+', find('Çay'))"
                                 (click)="log()">
                                 <mat-icon>add</mat-icon>
                             </button>
-                            <button mat-icon-button type="button" (click)="func('Çay', '-',_drinks[1].selectedOption)"
+                            <button matTooltip="Sepetten Çıkar" mat-icon-button type="button" (click)="func('Çay', '-',_drinks[1].selectedOption)"
                                 (click)="log()">
                                 <mat-icon>remove</mat-icon>
                             </button>
@@ -106,36 +106,21 @@
                         </div>
 
                     </div>
+
+                    
 
                     <div class="shop-item">
                         <div style="font-weight: bold;">Ihlamur</div>
                         <img src="../../assets/images/ihlamur.jpg" alt="" height="100px" width="100px">
                         <div>
-                            <button mat-icon-button type="button" (click)="func('Ihlamur', '+')" (click)="log()">
+                            <button matTooltip="Sepete Ekle" mat-icon-button type="button" (click)="func('Ihlamur', '+')" (click)="log()">
                                 <mat-icon>add</mat-icon>
                             </button>
-                            <button mat-icon-button type="button" (click)="func('Ihlamur', '-')" (click)="log()">
+                            <button matTooltip="Sepetten Çıkar" mat-icon-button type="button" (click)="func('Ihlamur', '-')" (click)="log()">
                                 <mat-icon>remove</mat-icon>
                             </button>
 
                         </div>
-                    </div>
-
-                    <div class="shop-item">
-                        <div style="font-weight: bold;">Filtre Kahve</div>
-                        <img src="../../assets/images/filtre.jfif" alt="" height="100px" width="100px">
-
-                        <div>
-                            <button mat-icon-button type="button" (click)="func('Filtre Kahve', '+')" (click)="log()">
-                                <mat-icon>add</mat-icon>
-                            </button>
-                            <button mat-icon-button type="button" (click)="func('Filtre Kahve', '-')" (click)="log()">
-                                <mat-icon>remove</mat-icon>
-                            </button>
-
-                        </div>
-
-
                     </div>
 
                     <div class="shop-item">
@@ -143,22 +128,22 @@
                         <img src="../../assets/images/tkahvesi.jfif" alt="" height="100px" width="100px">
 
                         <div style="width: 225px; ">
-                            <mat-chip-listbox aria-label="Priority Level">
-                                <mat-chip-option removable="false" selected="true" 
+                            <mat-chip-listbox aria-label="Priority Level" >
+                                <mat-chip-option removable="false" selected="true" color="accent"
                                     (selectionChange)="toggle('SADE',0)">Sade</mat-chip-option>
-                                <mat-chip-option removable="false"
+                                <mat-chip-option removable="false" color="accent"
                                     (selectionChange)="toggle('ORTA',0)">Orta</mat-chip-option>
-                                <mat-chip-option removable="false"
+                                <mat-chip-option removable="false" color="accent"
                                     (selectionChange)="toggle('ŞEKERLİ',0)">Şekerli</mat-chip-option>
                             </mat-chip-listbox>
                         </div>
 
                         <div>
-                            <button mat-icon-button type="button"
+                            <button mat-icon-button type="button" matTooltip="Sepete Ekle"
                                 (click)="func('Türk Kahvesi','+', _drinks[0].selectedOption)" (click)="log()">
                                 <mat-icon>add</mat-icon> </button>
 
-                            <button mat-icon-button type="button"
+                            <button mat-icon-button type="button" matTooltip="Sepetten Çıkar"
                                 (click)="func('Türk Kahvesi','-', _drinks[0].selectedOption)" (click)="log()">
                                 <mat-icon>remove</mat-icon>
                             </button>
@@ -168,49 +153,67 @@
                     </div>
 
                     <div class="shop-item">
+                        <div style="font-weight: bold;">Filtre Kahve</div>
+                        <img src="../../assets/images/filtre.jfif" alt="" height="100px" width="100px">
+
+                        <div>
+                            <button matTooltip="Sepete Ekle" mat-icon-button type="button" (click)="func('Filtre Kahve', '+')" (click)="log()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            <button matTooltip="Sepetten Çıkar" mat-icon-button type="button" (click)="func('Filtre Kahve', '-')" (click)="log()">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    <!-- <div class="shop-item">
                         <form #Form="ngForm" (ngSubmit)="addToCart(otherProduct)" #formDirective="ngForm"
-                            style="display:  flex; flex:1; flex-direction: column;" >
-                            <div style="font-weight: bold;">Başka Bir İsteğim Var</div>
-                            <div style="display: flex; flex-direction: row; ">
+                        style="display:  flex; flex:1; flex-direction: column;" >
+                        <div style="font-weight: bold;">Başka Bir İsteğim Var</div>
+                        <div style="display: flex; flex-direction: row; ">
                                 <mat-form-field >
                                     <mat-label>Notunuz </mat-label>
                                     <textarea matInput name="name" [(ngModel)]="otherProduct.name" style="height: 100px;
                                      resize: none;"></textarea>
                                 </mat-form-field>
-
+                                
                             </div>
                             <button mat-button color="primary" type="submit"
-                                [disabled]="!otherProduct.name">Onayla</button>
-
+                            [disabled]="!otherProduct.name">Onayla</button>
+                            
                         </form>
-
-
-                    </div>
-
+                        
+                        
+                    </div> -->
+                    
                 </div>
 
                 <div style="display: flex; flex:1; margin-top: 50px ; justify-content: space-between; ">
-                    <button matTooltip="Önceki Adım" mat-raised-button color="primary" matStepperPrevious>←</button>
+                    <button matTooltip="Önceki Adım" mat-raised-button color="primary" matStepperPrevious>	<div style="color: white; font-size: 20px;">←</div></button>
                     <div style=" display: flex; flex:1; justify-content: end;"> <button mat-raised-button type="submit"
-                            color="accent" [disabled]="isCartEmpty"> Siparişi Onayla</button> </div>
-                </div>
+                        color="primary" [disabled]="this.cart.length==0"> <div style="color:white;"> Siparişi Onayla </div></button> </div>
+                    </div>
+                    
+                </form>
+                
+                <div style="display: flex; flex:1; flex-direction: row; gap: 10px; margin-top: 50px; ">
 
-            </form>
+                    <div class="wrapper" style="position: relative; ">
+                        <button color="primary" matTooltip="Sepeti Görüntüle" matTooltipPosition="right" mat-fab type="button" (click)="openDialog() ">
+                            <mat-icon>shopping_cart</mat-icon> </button>
+                            <span style="color: white;">{{get_total()}}</span>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </mat-step>
+                
+            </mat-stepper>
+            
+        </div>
 
-            <div style="display: flex; flex:1; flex-direction: row; gap: 10px; margin-top: 50px; ">
-
-                <div class="wrapper" style="position: relative; ">
-                    <button mat-fab type="button" (click)="openDialog()">
-                        <mat-icon>shopping_cart</mat-icon> </button>
-                    <span>{{get_total()}}</span>
-
-                </div>
-
-            </div>
-
-
-        </mat-step>
-
-    </mat-stepper>
-
-</div>

@@ -3,12 +3,26 @@
 
 
 
-html, body { height: 100%;   }
-body {  font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #d1edff; flex-wrap: wrap;  display:flex; justify-content: center; align-items: center;}
 
-img{
-    border-radius: 50%
+html, body { height: 100%; width: 100%;  }
+body {  
+  font-family: Roboto, 
+  "Helvetica Neue", sans-serif; 
+  /* background-color: #3E7998;    */
+  display:flex; 
+  flex-wrap: wrap;   
+  justify-content: center; 
+  align-items: center; 
+  flex:1;
+  /* overflow: auto ; */
+  /* width: max-content;
+  min-width: 100vw; */
+  /* background-color: rgb(98, 130, 151); */
+
+/* 
+  son iki satırı değiştirebiliriz. */
  }
+
  textarea {
     max-height: auto;
     resize: both;
@@ -18,3 +32,52 @@ img{
  .mat-icon {
    vertical-align: top;
 }
+
+.mdc-button.mat-success,
+.mat-mdc-stroked-button.mat-success,
+.mat-mdc-raised-button.mat-success {
+  color: rgb(255, 90, 0);
+}
+.mat-mdc-unelevated-button.mat-success:hover,
+.mat-mdc-raised-button.mat-success:hover {
+  color: #f0fff3;
+  background-color: rgb(255, 90, 0);
+}
+
+.mat-mdc-unelevated-button:not(:disabled, :hover).mat-success,
+.mat-mdc-raised-button:not(:disabled, :hover).mat-success,
+.mat-mdc-fab.mat-success,
+.mat-mdc-mini-fab.mat-success {
+  color: #f0fff3;
+  background-color: rgb(255, 90, 0);
+}
+.mat-mdc-icon-button.mat-success,
+.mat-mdc-raised-button.mat-success {
+  color: rgb(255, 90, 0);
+}
+
+
+
+
+
+
+/* stepper icon colors  */
+/* .mat-step-header 
+.mat-step-icon-selected, 
+.mat-step-header 
+.mat-step-icon-state-done, 
+.mat-step-header 
+.mat-step-icon-state-edit { background-color: #3e7998; color: #fff; } */
+
+
+
+
+
+
+ 
+/* 
+.mat-form-field-empty.mat-form-field-label {
+   color: green;}
+  */
+
+  .mat-step-icon-state-edit { background-color: rgb(255, 90, 0);color: #fff; }

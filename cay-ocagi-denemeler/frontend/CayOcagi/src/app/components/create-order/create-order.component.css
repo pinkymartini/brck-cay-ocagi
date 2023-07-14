@@ -13,7 +13,7 @@
   text-align: center;
   font-size: 15px;
   font-weight: bold;
-  background-color: rgb(218, 243, 243);
+  background-color: rgb(98, 130, 151);
   border: 2px solid white;
 }
 
@@ -110,3 +110,8 @@ height: fit-content;
  
 
 }
+
+
+/* .stepper-label {
+  color:red;
+} */

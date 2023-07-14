@@ -1,0 +1,27 @@
+@import '@angular/material/theming';
+@import 'mat-palette-gen.scss';
+@include mat-core();
+
+$primary-color: rgb(255, 90, 0);
+$accent-color: rgb(98, 130, 151);
+ 
+$primary-palette: createPalette($primary-color);
+$accent-palette: createPalette($accent-color);
+
+
+$my-app-primary: mat-palette($primary-palette);
+$my-app-accent:  mat-palette($accent-palette);
+$my-app-warn:    mat-palette($mat-red);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);
+
+
+.alternate-theme {
+  $alternate-primary: mat-palette($mat-green);
+  $alternate-accent:  mat-palette($mat-yellow, 400);
+  $my-app-warn:    mat-palette($mat-red);
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent, $my-app-warn);
+  @include angular-material-theme($alternate-theme);
+}
+
+.mat-step-icon-state-edit { background-color: rgb(255, 90, 0);color: #fff; }

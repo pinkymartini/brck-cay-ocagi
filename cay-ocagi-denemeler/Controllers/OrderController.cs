@@ -21,7 +21,7 @@ namespace cay_ocagi_denemeler.Controllers
         [HttpGet]
         public async Task <IActionResult> GetOrders()
         {
-           var orders = await context.Orders.OrderBy(x => x.OrderDate).ToListAsync(); 
+           var orders = await context.Orders.OrderByDescending(x => x.OrderDate).ToListAsync(); 
 
             return Ok(orders);
         }
@@ -85,7 +85,7 @@ namespace cay_ocagi_denemeler.Controllers
         [Route("/GetOrderByDepartment")]
         public async Task<IActionResult> GetOrderByDepartment([FromQuery] string Department)
         {
-            var orders = await context.Orders.Where(x=>x.Location.Department==Department).OrderBy(x=> x.OrderDate).ToListAsync();
+            var orders = await context.Orders.Where(x=>x.Location.Department==Department).OrderByDescending(x=> x.OrderDate).ToListAsync();
 
             return Ok(orders);
         }

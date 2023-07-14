@@ -1,5 +1,5 @@
-<div style="background-color: #d1edff;  width: 1000px; max-width: 1000px; min-height:1000px; margin-top: 10px; margin-right: 10px; border-style: solid;" >
-  <div style="display: flex; flex-direction: row-reverse; border: solid red; ">
+<div style="display: flex; flex-direction: column;  flex:1; justify-content: flex-start; " >
+  <div style= " display: flex; flex-direction: row-reverse; ">
     <mat-form-field>
       <mat-label>Departman</mat-label>
       <mat-select required name="department" [(ngModel)]="departmentSelection">
@@ -15,30 +15,73 @@
 
   <div *ngIf="orderList.length!=0 else elseBlock2">
 
-  <div style="display: flex; flex-direction: column;gap: 20px; justify-content: center; align-items: center; border: seagreen solid; ">
-    <h1 style="color: #181544;">{{departmentSelection}} SİPARİŞLERİ</h1>
+  <div style="display: flex; flex-direction: column;gap: 15px; justify-content: center; align-items: center;  ">
+    <h1 style="color: rgb(255, 90, 0);">SİPARİŞLER ({{departmentSelection}}) </h1>
 
     <div *ngFor="let order of orderList">
-      <mat-card style=" width: 100vh; display: flex; flex-direction: column;  ">
+      <mat-card style=" display: flex; flex-direction: column; width: 700px; background-color: #ebe1e1;">
 
 
-        <div style="display: flex; flex-direction: row; justify-content:flex-start;">
+        <div style="display: flex; flex-direction: row; justify-content:space-between; flex: 1; ">
 
-          <div style="display: flex; flex-grow: 1;">
+          <div style="display: flex; flex: 1
+          ;">
 
-            <mat-card-header>
-              <mat-card-title style="color: #181544;">Sipariş Detayı</mat-card-title>
-              <mat-card-subtitle #myid> {{foo(order.orderDate, this.date )}} dakika önce sipariş
-                verildi</mat-card-subtitle>
+          <mat-card-header style="">
+                
+              <div style="display: flex; column-gap: 10px;  flex-direction: row; flex:1;   ">  
 
+                  <div style="display: flex; flex-direction: column; flex:1; word-break: break-word ; ">
+                    <mat-card-subtitle style="color: rgb(255, 90, 0); font-weight: bold; ">
+                      Sipariş Sahibi 
+                    </mat-card-subtitle>
+                    
+                    <mat-card-title style="color: rgb(98, 130, 151);">
+                      {{order.orderedBy?.name}}
+                      {{order.orderedBy?.surname}}
+                    </mat-card-title>
+                  
+                  </div>
+
+                  <div style="display: flex; flex-direction: column; flex:1;   ">
+                      <mat-card-subtitle style="font-weight: bold; color: rgb(255, 90, 0);">
+                        Sipariş Lokasyonu
+                      </mat-card-subtitle>
+                      <mat-card-title style="color: rgb(98, 130, 151);"> 
+                        {{order.location?.department}} {{order.location?.meetingRoom}}
+                      </mat-card-title>
+                  </div>
+              </div>
+
+              <!--ÇOK ÖNEMLİ ALTTAKİ div-->
+               <div style="visibility: hidden;"> {{foo(order.orderDate, this.date )}}</div> 
+               <!-- yukardaki div olmazsa spinner color ve mode yanlış çalışıyor ??? -->
+                 
             </mat-card-header>
           </div>
 
-          <div style="display: flex;flex: 1; justify-content: center; padding-top: 15px; "  >
-            <mat-progress-spinner [diameter]="45" class="example-margin" [color]="color" [mode]="mode"
-              [value]="progressSpinnerValue*100/60">
+          <div style="display: flex; justify-content: center; padding-top: 15px;  flex-direction: column; flex: 1;" class="alternate-theme"  >
+            
+            <div style="display: flex; justify-content: center;  align-items: center;">
+              
+              <div  style="position: relative; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+              <mat-progress-spinner 
+                [diameter]="60"  
+                [color]="color" 
+                [mode]="mode"
+                [value]="(progressSpinnerValue*100/60)+1" 
+                style="width: 80px;height: 80px;position: absolute;top: 0;left: 0;">
+              
+              </mat-progress-spinner>
+              <mat-card-title style="color: rgb(98, 130, 151);"> {{foo(order.orderDate, this.date )}}  </mat-card-title>
+              </div>
+              <mat-card-title style="color: rgb(98, 130, 151);"> dakika önce sipariş verildi.  </mat-card-title>
+            <!-- </div> -->
 
-            </mat-progress-spinner>
+             
+
+            </div>
+            
           </div>
 
 
@@ -46,17 +89,31 @@
 
         <mat-divider></mat-divider>
 
+        <div style="display: flex; flex-direction: row; flex: 1; justify-content: center;align-items:center; ">
+          
+          <div style="display: flex; flex-direction: column;  flex: 1; justify-content: center; align-items: center;"> 
+            
 
-        <div style="display: flex; flex-direction: row; flex: 1;">
-          <div style="display: flex; flex-direction: column;  flex: 1;">
+            
+
             <div *ngFor="let product of order.products;">
 
-              <div *ngIf="product.quantity!=0 &&product.type!='other' else elseBlock">
+              
+
+              <div *ngIf="product.quantity!=0 &&product.type!='other' && product.type!=undefined ">
                 <mat-card-content>
-                  • {{product.quantity}} {{product.type| titlecaseTurkish }} {{product.name}}
+                  • {{product.quantity}}  {{product.name}} ({{product.type| titlecaseTurkish }})
+     
                 </mat-card-content>
 
               </div>
+              
+              <div *ngIf="product.quantity!=0 &&product.type!='other' && product.type==undefined ">
+                <mat-card-content>
+                  • {{product.quantity}}  {{product.name}} 
+                </mat-card-content>
+
+              </div> 
 
 
               <ng-template #elseBlock>
@@ -69,50 +126,31 @@
             </div>
           </div>
 
-          <div style="display: flex; flex-direction: column; flex: 1;">
-            <mat-card-subtitle style="font-weight: bold;">
-              Sipariş Lokasyonu
-            </mat-card-subtitle>
-            <mat-card-content> {{order.location?.department}} {{order.location?.meetingRoom}} </mat-card-content>
-
-            <mat-card-subtitle style="font-weight: bold;">
-              Sipariş Sahibi
-            </mat-card-subtitle>
-            <mat-card-content>{{order.orderedBy?.name}} {{order.orderedBy?.surname}}</mat-card-content>
-
-            <mat-card-subtitle style="font-weight: bold;">
-              Sipariş Saati
-            </mat-card-subtitle>
-            <mat-card-content style="font-weight: bold;"> {{order.orderDate | date:'HH:mm'}}</mat-card-content>
-
-
-
-
-
-
-
-
-          </div>
+         
 
         </div>
 
         <mat-divider></mat-divider>
-        <mat-card-footer style="display: flex; flex-direction: row-reverse;">
+
+
+        <mat-card-footer style="display: flex; flex-direction: row;justify-content: space-between; ">
+          <div style="display: flex; flex: 1; margin-left: 10px;">
+            <mat-card-subtitle style="font-weight: bold; ">
+              Sipariş Saati:
+            </mat-card-subtitle>
+            <mat-card-content style="font-weight: bold;"> {{order.orderDate | date:'HH:mm'}}</mat-card-content>
+          </div>
           <button mat-raised-button color="warn" (click)="deleteOrder(order.orderId)">Onayla ve Sil</button>
         </mat-card-footer>
       </mat-card>
 
-
-
-
+      </div>
+      <!-- <div id="target"></div> -->
     </div>
-    <div id="target"></div>
-  </div>
  
 
   </div>
-  <ng-template #elseBlock2>
-    <h1 style="text-align: center;">Henüz bir sipariş yok.</h1>
-  </ng-template>
+    <ng-template #elseBlock2>
+      <h1 style="text-align: center;">Henüz bir sipariş yok.</h1>
+    </ng-template>
 </div>
-
