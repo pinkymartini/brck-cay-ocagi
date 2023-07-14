@@ -115,6 +115,13 @@
 
               </div> 
 
+              <div *ngIf="product.quantity!=0 &&product.type=='other'  ">
+                <mat-card-content>
+                <div style="font-weight: bold; color: rgb(255, 90, 0); font-size: large;">Not:<span style="font-weight: normal; color: black;"> {{product.name}} </span>  </div>
+                </mat-card-content>
+
+              </div> 
+
 
               <ng-template #elseBlock>
                 <mat-card-content>
